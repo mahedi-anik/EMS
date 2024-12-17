@@ -1,10 +1,11 @@
-﻿namespace EMS.Application.DTOs
+﻿using EMS.Application.Responses;
+using MediatR;
+
+namespace EMS.Application.Commands.PerformanceReviews
 {
-    public class PerformanceReview
+    public class CreatePerformanceReviewCommand : IRequest<ServiceResponse>
     {
-        public string? Id { get; set; }
         public string EmployeeId { get; set; }
-        public string EmployeeName { get; set; }
         public DateTime ReviewDate { get; set; }
         public decimal ReviewScore { get; set; }
         public string ReviewNote { get; set; }

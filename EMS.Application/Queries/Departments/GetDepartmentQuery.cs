@@ -2,9 +2,9 @@
 using EMS.Application.Responses;
 using MediatR;
 
-namespace EMS.Application.Queries.Employees
+namespace EMS.Application.Queries.Departments
 {
-    public class GetEmployeeQuery : IRequest<QueryRecordResponse<EmployeeResponse>>
+    public class GetDepartmentQuery : IRequest<QueryRecordResponse<DepartmentResponse>>
     {
         public string Id { get; set; }
     }

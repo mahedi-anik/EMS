@@ -12,6 +12,8 @@ namespace EMS.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IPerformanceReviewRepository, PerformanceReviewRepository>();
             return services;
         }
     }
