@@ -1,4 +1,5 @@
-﻿using EMS.Domain.Entities;
+﻿using EMS.Application.Extensions;
+using EMS.Domain.Entities;
 using EMS.Domain.Interfaces;
 using EMS.Infrastructure.GenericRepository;
 using EMS.Infrastructure.Persistence;
@@ -39,9 +40,9 @@ namespace EMS.Infrastructure.Repositories.Repositories
         {
             Expression<Func<PerformanceReview, bool>> filter = null;
 
-            if (!searchTerm.IsNullOrEmpty())
+            if (!searchTerm.IsNullOrBlank())
             {
-                filter = x => x.ReviewScore.ToString().Contains(searchTerm.ToLower());
+                filter = x => x.Employee.EmployeeName.ToLower().Contains(searchTerm.ToLower());
             }
 
             var count = await CountAsync(filter);
