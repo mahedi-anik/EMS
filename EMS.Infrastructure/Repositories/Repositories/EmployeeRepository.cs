@@ -34,7 +34,8 @@ namespace EMS.Infrastructure.Repositories.Repositories
         public async Task<Employee> CreateEmployee(Employee employee)
         {
             employee.CreateDate = DateTime.UtcNow;
-            employee.CreateBy = "Unknown";
+            employee.CreateBy = "Tester";
+            employee.UpdateBy = "Tester";
             await InsertAsync(employee);
             return employee;
         }
@@ -64,7 +65,8 @@ namespace EMS.Infrastructure.Repositories.Repositories
         public async Task<Employee> UpdateEmployee(Employee employee)
         {
             employee.UpdateDate = DateTime.UtcNow;
-            employee.UpdateBy = "Unknown";
+            employee.CreateBy = "Tester";
+            employee.UpdateBy = "Tester";
             await UpdateAsync(employee);
             return employee;
         }

@@ -24,7 +24,7 @@ namespace EMS.Application.Mapper
 
             CreateMap<Department, DepartmentResponse>()
                 .ForMember(dest => dest.ManagerId, opt => opt.MapFrom(src => src.ManagerId))
-                .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Employee.EmployeeName));
+                .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Manager.EmployeeName));
             CreateMap<CreateDepartmentCommand, Department>();
             CreateMap<UpdateDepartmentCommand, Department>();
 

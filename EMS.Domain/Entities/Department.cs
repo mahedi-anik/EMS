@@ -6,8 +6,7 @@ namespace EMS.Domain.Entities
     {
         public string DepartmentName { get; set; }
         public string? ManagerId { get; set; }
-        [ForeignKey(nameof(ManagerId))]
-        public Employee Employee { get; set; }
-        public decimal Budget { get; set; }
+        public Employee? Manager { get; set; }
+        public decimal? Budget { get; set; }
     }
 }

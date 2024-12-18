@@ -29,7 +29,8 @@ namespace EMS.Infrastructure.Repositories.Repositories
         public async Task<PerformanceReview> CreatePerformanceReview(PerformanceReview performanceReview)
         {
             performanceReview.CreateDate = DateTime.UtcNow;
-            performanceReview.CreateBy = "Unknown";
+            performanceReview.CreateBy = "Tester";
+            performanceReview.UpdateBy = "Tester";
             await InsertAsync(performanceReview);
             return performanceReview;
         }
@@ -59,7 +60,8 @@ namespace EMS.Infrastructure.Repositories.Repositories
         public async Task<PerformanceReview> UpdatePerformanceReview(PerformanceReview performanceReview)
         {
             performanceReview.UpdateDate = DateTime.UtcNow;
-            performanceReview.UpdateBy = "Unknown";
+            performanceReview.UpdateBy = "Tester";
+            performanceReview.CreateBy = "Tester";
             await UpdateAsync(performanceReview);
             return performanceReview;
         }

@@ -10,7 +10,7 @@ namespace EMS.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DepartmentController
+    public class DepartmentController : ControllerBase
     {
         #region Fields
 

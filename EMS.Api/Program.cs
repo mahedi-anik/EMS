@@ -4,52 +4,58 @@ using EMS.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services
-builder.Services.AddControllers();
+builder.Services.AddControllers(); // Registers the controllers for API endpoints
+
+// Register application services 
 builder.Services.AddApplicationServices();
+
+// Register infrastructure services 
 builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection"));
 
-// Add services to the container.
+// Add AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add IHttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
+// Add Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Enable CORS for local development
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()  // Allow any origin (for development; consider more restrictive policies for production)
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger();  // Enable Swagger UI in development mode
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Use HTTPS Redirection (if applicable)
+app.UseHttpsRedirection(); // Redirect HTTP requests to HTTPS
 
-var summaries = new[]
+// Enable CORS policy
+app.UseCors("AllowAll"); // Apply the "AllowAll" CORS policy
+
+// Map API controllers to routes
+app.MapControllers();
+
+// Optionally, add ForwardedHeaders for reverse proxy scenarios (e.g., when deploying on servers with proxies/load balancers)
+app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+});
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+// Run the application
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

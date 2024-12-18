@@ -5,6 +5,6 @@ namespace EMS.Application.Queries.Departments
 {
     public class GetDepartmentsQuery : PagedQueryRequestBase<DepartmentResponse>
     {
-        public string SearchTerm { get; set; } = string.Empty;
+        public string? SearchTerm { get; set; } 
     }
 }

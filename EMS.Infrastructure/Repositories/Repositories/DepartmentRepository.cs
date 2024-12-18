@@ -1,9 +1,9 @@
-﻿using EMS.Domain.Entities;
+﻿using EMS.Application.Extensions;
+using EMS.Domain.Entities;
 using EMS.Domain.Interfaces;
 using EMS.Infrastructure.GenericRepository;
 using EMS.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
 
 namespace EMS.Infrastructure.Repositories.Repositories
@@ -35,7 +35,8 @@ namespace EMS.Infrastructure.Repositories.Repositories
         public async Task<Department> CreateDepartment(Department department)
         {
             department.CreateDate = DateTime.UtcNow;
-            department.CreateBy = "Unknown";
+            department.CreateBy = "Tester";
+            department.UpdateBy = "Tester";
             await InsertAsync(department);
             return department;
         }
@@ -44,14 +45,14 @@ namespace EMS.Infrastructure.Repositories.Repositories
         {
             Expression<Func<Department, bool>> filter = null;
 
-            if (!searchTerm.IsNullOrEmpty())
+            if (!searchTerm.IsNullOrBlank())
             {
                 filter = x => x.DepartmentName.ToLower().Contains(searchTerm.ToLower());
             }
 
             var count = await CountAsync(filter);
 
-            var dbset = _dbSet.Include(i => i.Employee).AsQueryable();
+            var dbset = _dbSet.Include(i => i.Manager).AsQueryable();
 
             var Departments = await FilterAsync(
                 predicate: filter,
@@ -65,7 +66,8 @@ namespace EMS.Infrastructure.Repositories.Repositories
         public async Task<Department> UpdateDepartment(Department department)
         {
             department.UpdateDate = DateTime.UtcNow;
-            department.UpdateBy = "Unknown";
+            department.UpdateBy = "Tester";
+            department.CreateBy = "Tester";
             await UpdateAsync(department);
             return department;
         }
