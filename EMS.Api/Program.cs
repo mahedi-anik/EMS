@@ -1,5 +1,10 @@
 using EMS.Application;
+using EMS.Application.Queries.PerformanceReviews;
+using EMS.Application.StoredProcedureService;
+using EMS.Domain.Interfaces;
 using EMS.Infrastructure;
+using EMS.Infrastructure.GenericRepository;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +13,11 @@ builder.Services.AddControllers(); // Registers the controllers for API endpoint
 
 // Register application services 
 builder.Services.AddApplicationServices();
+builder.Services.AddScoped<PerformanceReviewService>();
+
+// Add MediatR if you are using it
+//builder.Services.AddMediatR(typeof(EmployeePerformanceHistoryQueryHandler).Assembly);
+
 
 // Register infrastructure services 
 builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection"));

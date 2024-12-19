@@ -16,5 +16,6 @@
         public const string Action_GetPerformanceReviews = "GetPerformanceReviews";
         public const string Action_CreatePerformanceReview = "CreatePerformanceReview";
         public const string Action_UpdatePerformanceReview = "UpdatePerformanceReview";
+        public const string Action_GetEmloyeePerformanceReview = "Action_GetEmloyeePerformanceReview";
     }
 }
